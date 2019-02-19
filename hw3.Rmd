@@ -1,0 +1,68 @@
+---
+title: "hw3"
+output: html_document
+---
+
+```{r}
+# 1.
+data(tips, package="reshape2")
+
+numParty <- dim(tips)[1]
+# The waiter served 244 parties
+```
+
+```{r}
+# 2.
+
+str(tips)
+# The type for each variable is listed first after the colon in the output for this function.
+```
+
+```{r}
+# 3.
+x <- tips$day
+levels(x) <- c('Thur', 'Fri', 'Sat', 'Sun')
+levels(x)
+
+```
+
+```{r}
+# 4.
+female5 <- tips[tips$sex == 'Female' & tips$size >= 5, ]
+female5
+```
+
+```{r}
+# 5.
+library(ggplot2)
+ggplot(data = tips, aes(x = total_bill, y = tip)) + geom_point()
+# There is a positive correlation between the total bill and the tip amount.Two abnormalities in the plot are a few random outliers and the wide spread of the points, particularly in the lower right quadrant of the graph.
+```
+
+```{r}
+# 6.
+tiprate <- tips$tip/tips$total_bill
+cbind(tips, tiprate)
+mean(tiprate)
+```
+
+```{r}
+# 7.
+lvl <- levels(tips$time)
+revTime <- factor(tips$time, levels=rev(lvl))
+ggplot(tips, aes(x=revTime, y=tiprate)) + geom_boxplot()
+```
+
+```{r}
+# 8.
+ggplot(tips, aes(x=total_bill, y=tip, color=sex, shape=smoker)) + geom_point()
+# Looking at the plot, there appear to be more Male data points in the upper quadrants of the graph, which indicates that men tend to give slightly higher tips than women. Additionally, there does not seem to be a significant difference between tip amounts for smokers vs. no-smokers, although non-smokers may have a slightly higher tip average.
+```
+
+```{r}
+# 9.
+lvlDays <- levels(tips$day)
+newDays <- factor(tips$day, levels = c('Thur', 'Fri', 'Sat', 'Sun'))
+ggplot(tips, aes(x=sex)) + geom_bar() + facet_wrap(newDays)
+# Men tend to pay the tip more often on Fridays and weekends, while women tend to pay the tip more on Thursdays.
+```
